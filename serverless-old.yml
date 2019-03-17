@@ -1,0 +1,220 @@
+service: nest
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python3.6
+  environment:
+    ARTICLES_TABLE: ${self:service}-${opt:stage, self:provider.stage}-articles
+    FOLDERS_TABLE: ${self:service}-${opt:stage, self:provider.stage}-folders
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:service}-${opt:stage, self:provider.stage}-*"
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - Ref: ServerlessDeploymentBucket
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - Ref: ServerlessDeploymentBucket
+            - "/*"
+
+# you can overwrite defaults here
+#  stage: dev
+#  region: us-east-1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.py
+#    - exclude-me-dir/**
+
+functions:
+  create_article:
+    handler: nest/articles.create
+    events:
+      - http:
+          path: articles
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
+  get_articles:
+    handler: nest/articles.list
+    events:
+      - http:
+          path: articles
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  get_articles_from_folder:
+    handler: nest/articles.list_from_folder
+    events:
+      - http:
+          path: folders/{name}/articles
+          method: get
+          cors: true
+          authorizer: aws_iam
+          request:
+            parameters:
+              path:
+                name: true
+
+  delete_article:
+    handler: nest/articles.delete
+    events:
+      - http:
+          path: articles
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+
+  bind_article:
+    handler: nest/articles.bind
+    events:
+      - http:
+          path: articles/bind
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
+  create_folder:
+    handler: nest/folders.create
+    events:
+      - http:
+          path: folders
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
+  get_folders:
+    handler: nest/folders.list
+    events:
+      - http:
+          path: folders
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+
+  delete_folders:
+    handler: nest/folders.delete
+    events:
+      - http:
+          path: folders
+          method: delete
+          cors: true
+          authorizer: aws_iam
+
+resources:
+  Resources:
+
+    GatewayResponseDefault4XX:
+          Type: 'AWS::ApiGateway::GatewayResponse'
+          Properties:
+            ResponseParameters:
+              gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+              gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              gatewayresponse.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+            ResponseType: DEFAULT_4XX
+            RestApiId:
+              Ref: 'ApiGatewayRestApi'
+
+    ArticlesTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: uid
+            AttributeType: S
+
+          - AttributeName: url
+            AttributeType: S
+
+          - AttributeName: created_at
+            AttributeType: N
+
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+
+          - AttributeName: url
+            KeyType: RANGE
+
+        LocalSecondaryIndexes:
+        - IndexName: uid-created
+          KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+          - AttributeName: created_at
+            KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.ARTICLES_TABLE}
+
+    FoldersTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Delete
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: uid
+            AttributeType: S
+
+          - AttributeName: name
+            AttributeType: S
+
+          - AttributeName: created_at
+            AttributeType: N
+
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+
+          - AttributeName: name
+            KeyType: RANGE
+
+        LocalSecondaryIndexes:
+        - IndexName: uid-created
+          KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+          - AttributeName: created_at
+            KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.FOLDERS_TABLE}
