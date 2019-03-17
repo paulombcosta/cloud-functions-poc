@@ -135,7 +135,6 @@ functions:
 
 resources:
   Resources:
-
     GatewayResponseDefault4XX:
           Type: 'AWS::ApiGateway::GatewayResponse'
           Properties:
