@@ -2,15 +2,14 @@ package io.paulocosta.cloudfunctionpoc
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
 class CloudFunctionPocApplication {
 
-    @Bean
-    fun test(): () -> String {
-        return {"hai"}
-    }
+//    @Bean
+//    fun test(): () -> String {
+//        return {"hai"}
+//    }
 
     companion object {
         @JvmStatic

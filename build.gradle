@@ -29,6 +29,8 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+    implementation 'org.springframework.cloud:spring-cloud-function-context'
+    implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
     implementation 'org.springframework.cloud:spring-cloud-function-kotlin:2.0.1.RELEASE'
 //    implementation 'org.springframework.cloud:spring-cloud-starter-aws'
 //    implementation 'org.springframework.cloud:spring-cloud-starter-aws-jdbc'
