@@ -17,7 +17,7 @@ class CloudFunctionPocApplication {
 
     companion object {
         @JvmStatic
-        fun main(args: Array<String>) {
+        fun main(args: Array<String> = emptyArray()) {
             SpringApplication.run(CloudFunctionPocApplication::class.java, *args)
         }
     }

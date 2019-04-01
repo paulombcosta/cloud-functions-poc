@@ -6,6 +6,9 @@ buildscript {
     dependencies {
         classpath("${thinPlugin}:${thinVersion}")
     }
+//    repositories {
+//        maven { url 'https://repo.spring.io/libs-milestone' }
+//    }
 }
 
 plugins {
@@ -25,12 +28,13 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
+    maven { url 'http://repo.spring.io/milestone/'}
     mavenCentral()
 }
 
 ext {
     set('springCloudVersion', 'Greenwich.SR1')
-    set('springCloudFunctionVersion', '2.0.1-RELEASE')
+    set('springCloudFunctionVersion', '2.1.0.M1')
 }
 
 dependencies {
@@ -40,23 +44,15 @@ dependencies {
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
-    //implementation 'org.springframework.cloud:spring-cloud-function-context'
-    //implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
+    //implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+    implementation 'org.springframework.cloud:spring-cloud-function-context:2.1.0.M1'
+    implementation 'org.springframework.cloud:spring-cloud-function-web:2.1.0.M1'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-function-adapter-aws', version: '2.0.1.RELEASE'
-    // https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core
     compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
-    // https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-events
     compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
     implementation 'org.springframework.cloud:spring-cloud-function-kotlin:2.0.1.RELEASE'
-    // implementation 'org.springframework.cloud:spring-cloud-starter-aws'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws-jdbc'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws-messaging'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
-    //classpath("${thinPlugin}:${thinVersion}")
-    // https://mvnrepository.com/artifact/org.springframework.boot.experimental/spring-boot-thin-launcher
-    //compile group: 'org.springframework.boot.experimental', name: 'spring-boot-thin-launcher', version: '1.0.21.RELEASE'
 
 }
 

@@ -6,6 +6,7 @@ service: poc
 
 provider:
   name: aws
+  timeout: 30
   runtime: java8
 
 # you can overwrite defaults here
@@ -43,6 +44,7 @@ functions:
     handler: io.paulocosta.cloudfunctionpoc.Handler
     environment:
       FUNCTION_NAME: test
+      MAIN_CLASS: io.paulocosta.cloudfunctionpoc.CloudFunctionPocApplication
     events:
       #- cloudwatchLog: '/aws/lambda/poc-dev-hello'
       - http:
