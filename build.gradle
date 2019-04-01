@@ -1,12 +1,24 @@
+buildscript {
+    ext {
+        set('thinPlugin','org.springframework.boot.experimental:spring-boot-thin-gradle-plugin')
+        set('thinVersion', '1.0.11.RELEASE')
+    }
+    dependencies {
+        classpath("${thinPlugin}:${thinVersion}")
+    }
+}
+
 plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
     id 'org.jetbrains.kotlin.jvm' version '1.3.21'
     id 'org.jetbrains.kotlin.plugin.spring' version '1.3.21'
     id 'com.github.johnrengelman.shadow' version '5.0.0'
+    //id 'org.springframework.boot.experimental.thin-launcher' version '1.0.21.RELEASE'
 }
 
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.github.johnrengelman.shadow'
+//apply plugin: 'org.springframework.boot.experimental.thin-launcher'
 
 group = 'io.paulocosta'
 version = '0.0.1-SNAPSHOT'
@@ -29,7 +41,7 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
-    implementation 'org.springframework.cloud:spring-cloud-function-context'
+    //implementation 'org.springframework.cloud:spring-cloud-function-context'
     //implementation 'org.springframework.cloud:spring-cloud-function-adapter-aws'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-function-adapter-aws', version: '2.0.1.RELEASE'
     // https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core
@@ -42,6 +54,10 @@ dependencies {
 //    implementation 'org.springframework.cloud:spring-cloud-starter-aws-messaging'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    //classpath("${thinPlugin}:${thinVersion}")
+    // https://mvnrepository.com/artifact/org.springframework.boot.experimental/spring-boot-thin-launcher
+    //compile group: 'org.springframework.boot.experimental', name: 'spring-boot-thin-launcher', version: '1.0.21.RELEASE'
+
 }
 
 import com.github.jengelman.gradle.plugins.shadow.transformers.*
@@ -63,7 +79,7 @@ shadowJar {
     }
 }
 
-
+//
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"

@@ -34,15 +34,17 @@ provider:
 
 # you can add packaging information here
 package:
+  # artifact: /home/paulo/Projects/cloudfunctionspoc/build/libs/cloud-function-poc-0.0.1-SNAPSHOT.jar
   artifact: /home/paulo/Projects/cloudfunctionspoc/build/libs/cloud-function-poc-0.0.1-SNAPSHOT-aws.jar
 
 functions:
   hello:
-    handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
+    # handler: org.springframework.cloud.function.adapter.aws.SpringBootApiGatewayRequestHandler
+    handler: io.paulocosta.cloudfunctionpoc.Handler
     environment:
       FUNCTION_NAME: test
     events:
-      - cloudwatchLog: '/aws/lambda/hello'
+      #- cloudwatchLog: '/aws/lambda/poc-dev-hello'
       - http:
           path: test
           method: get
