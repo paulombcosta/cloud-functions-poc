@@ -1,4 +1,5 @@
-deploy:
+deploy: destroy
+	./gradlew shadowJar
 	@echo deploys to serverless
 	serverless deploy -v
 destroy:

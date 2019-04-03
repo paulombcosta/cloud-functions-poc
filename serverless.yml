@@ -46,10 +46,9 @@ functions:
       FUNCTION_NAME: test
       MAIN_CLASS: io.paulocosta.cloudfunctionpoc.CloudFunctionPocApplication
     events:
-      #- cloudwatchLog: '/aws/lambda/poc-dev-hello'
       - http:
           path: test
-          method: get
+          method: post
           cors: true
 
 #    The following are a few example events you can configure

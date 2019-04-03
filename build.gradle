@@ -34,23 +34,28 @@ repositories {
 
 ext {
     set('springCloudVersion', 'Greenwich.SR1')
-    set('springCloudFunctionVersion', '2.1.0.M1')
+    set('springCloudFunctionVersion', '2.0.1.RELEASE')
 }
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    //implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
-    implementation 'org.springframework.cloud:spring-cloud-function-context:2.1.0.M1'
-    implementation 'org.springframework.cloud:spring-cloud-function-web:2.1.0.M1'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-function-web'
+
+//    implementation 'org.springframework.cloud:spring-cloud-function-context:2.1.0.M1'
+//    implementation 'org.springframework.cloud:spring-cloud-function-web:2.1.0.M1'
+//    implementation 'org.springframework.cloud:spring-cloud-function-core:2.1.0.M1'
+//    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     compile group: 'org.springframework.cloud', name: 'spring-cloud-function-adapter-aws', version: '2.0.1.RELEASE'
     compile group: 'com.amazonaws', name: 'aws-lambda-java-core', version: '1.2.0'
     compile group: 'com.amazonaws', name: 'aws-lambda-java-events', version: '2.2.6'
     implementation 'org.springframework.cloud:spring-cloud-function-kotlin:2.0.1.RELEASE'
+    //implementation 'org.springframework.cloud:spring-cloud-function-kotlin:2.1.0.M1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 
