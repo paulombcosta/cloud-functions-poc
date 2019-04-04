@@ -17,20 +17,25 @@ class CloudFunctionPocApplication {
         return {it}
     }
 
+    @Bean
+    fun test2(): Function<Test, Test> {
+        return Function { x -> x }
+    }
+
 //    @Bean
 //    fun test(): Function<Message<Test>, Message<Test>> {
 //        return Function { x -> x }
 //    }
 
-    @Bean
-    fun test2(): () -> Test {
-        return { Test("hai") }
-    }
-
-    @Bean
-    fun test3(): Function<Test, Test> {
-        return Function { x -> x }
-    }
+//    @Bean
+//    fun test2(): () -> Test {
+//        return { Test("hai") }
+//    }
+//
+//    @Bean
+//    fun test3(): Function<Test, Test> {
+//        return Function { x -> x }
+//    }
 
     companion object {
         @JvmStatic
