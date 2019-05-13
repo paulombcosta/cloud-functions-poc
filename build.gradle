@@ -1,7 +1,4 @@
 buildscript {
-    dependencies {
-        classpath("${thinPlugin}:${thinVersion}")
-    }
     repositories {
         maven { url 'https://repo.spring.io/libs-milestone' }
     }

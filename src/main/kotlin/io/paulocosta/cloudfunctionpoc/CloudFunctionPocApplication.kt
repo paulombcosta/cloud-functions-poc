@@ -38,7 +38,7 @@ class CloudFunctionPocApplication {
 
     // function
     @Bean
-    fun testFunc(): (Test) -> Test {
+    fun testFunc(): (String) -> String {
         return { x -> x }
     }
 
