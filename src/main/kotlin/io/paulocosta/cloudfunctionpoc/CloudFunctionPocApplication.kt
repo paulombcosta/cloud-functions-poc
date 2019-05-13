@@ -3,7 +3,9 @@ package io.paulocosta.cloudfunctionpoc
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
+import java.util.function.Consumer
 import java.util.function.Function
+import java.util.function.Supplier
 
 class Test(var name: String?) {
     constructor(): this("")
@@ -12,23 +14,36 @@ class Test(var name: String?) {
 @SpringBootApplication
 class CloudFunctionPocApplication {
 
+    // suppliers
     @Bean
-    fun test(): (Test) -> Test {
-        return {it}
-    }
-
-//    @Bean
-//    fun test(): Function<Message<Test>, Message<Test>> {
-//        return Function { x -> x }
-//    }
-
-    @Bean
-    fun test2(): () -> Test {
+    fun testSup(): () -> Test {
         return { Test("hai") }
     }
 
     @Bean
-    fun test3(): Function<Test, Test> {
+    fun testSup2(): Supplier<Test> {
+        return Supplier { Test("Hai") }
+    }
+
+    // consumer
+    @Bean
+    fun testCons(): (Test) -> Unit {
+        return {}
+    }
+
+    @Bean
+    fun testCons1(): Consumer<Test> {
+        return Consumer {  }
+    }
+
+    // function
+    @Bean
+    fun testFunc(): (Test) -> Test {
+        return { x -> x }
+    }
+
+    @Bean
+    fun testFunc1(): Function<Test, Test> {
         return Function { x -> x }
     }
 
