@@ -7,9 +7,7 @@ import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
 
-class Test(var name: String?) {
-    constructor(): this("")
-}
+data class Test(val name: String)
 
 @SpringBootApplication
 class CloudFunctionPocApplication {
@@ -38,7 +36,7 @@ class CloudFunctionPocApplication {
 
     // function
     @Bean
-    fun testFunc(): (String) -> String {
+    fun testFunc(): (Test) -> Test {
         return { x -> x }
     }
 
